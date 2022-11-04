@@ -10,7 +10,7 @@ export default function App() {
   return (
     <Routes>
       {user ? (
-        <Profile user={user} />
+        <Route path="*" element={<Profile user={user} />} />
       ) : (
         <>
           <Route path="/singup" element={<Singup setUser={setUser} />} />

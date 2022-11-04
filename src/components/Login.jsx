@@ -1,8 +1,16 @@
 import { Button, Form, Input, Layout } from "antd";
 
-export default function Login() {
+export default function Login({ setUser }) {
     const handleFormSubmit = (values) => {
         console.log('Success', values)
+        fetch('http://localhost:3030/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify(values)
+        })
+        .then(response => response.json())
+        .then(setUser)
+        .catch(alert)
     }
   return (
   <Layout.Content style={{ padding: '50px' }}>

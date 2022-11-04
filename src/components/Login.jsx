@@ -1,6 +1,6 @@
 import { Button, Form, Input, Layout } from "antd";
 
-export default function Login({ setUser }) {
+export default function Login({ setUser, setToken }) {
     const handleFormSubmit = (values) => {
         console.log('Success', values)
         fetch('http://localhost:3030/login', {
@@ -9,7 +9,10 @@ export default function Login({ setUser }) {
             body: JSON.stringify(values)
         })
         .then(response => response.json())
-        .then(setUser)
+        .then(data => {
+            setToken(data.token)
+            setUser(data.user)
+        })
         .catch(alert)
     }
   return (

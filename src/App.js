@@ -7,14 +7,15 @@ import "./App.css";
 
 export default function App() {
   const [user, setUser] = useState();
+  const [token, setToken] = useState();
   return (
     <Routes>
       {user ? (
-        <Route path="*" element={<Profile user={user} />} />
+        <Route path="*" element={<Profile token={token} setUser={setUser} user={user} />} />
       ) : (
         <>
-          <Route path="/singup" element={<Singup setUser={setUser} />} />
-          <Route path="*" element={<Login setUser={setUser} />} />
+          <Route path="/singup" element={<Singup setToken={setToken} setUser={setUser} />} />
+          <Route path="*" element={<Login setToken={setToken} setUser={setUser} />} />
         </>
       )}
     </Routes>

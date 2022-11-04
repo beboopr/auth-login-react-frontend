@@ -1,13 +1,29 @@
 import { Button, Form, Input, Layout } from "antd";
 
-export default function Profile({ user }) {
+export default function Profile({ user, token, setUser }) {
+  const handleProfileUpdate = (values) => {
+    // send from values and token to API
+    fetch(`http://localhost:3030/user/${user.uid}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      body: JSON.stringify(values),
+    })
+    .then(response => response.json())
+    .then(setUser)
+    .cath(alert)
+  };
   return (
     <Layout.Content style={{ padding: "50px" }}>
       <h1>Profile</h1>
-      <Form 
-      initialValues={user}
-      labelCol={{ span: 8 }} 
-      wrapperCol={{ span: 16 }}>
+      <Form
+        onFinish={handleProfileUpdate}
+        initialValues={user}
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+      >
         <Form.Item label="Name" name="name">
           <Input />
         </Form.Item>
@@ -15,7 +31,9 @@ export default function Profile({ user }) {
           <Input />
         </Form.Item>
         <Form.Item wrapperCol={{ span: 16, offset: 8 }}>
-          <Button type="primary" htmlType="submit">Save</Button>
+          <Button type="primary" htmlType="submit">
+            Save
+          </Button>
         </Form.Item>
       </Form>
     </Layout.Content>
